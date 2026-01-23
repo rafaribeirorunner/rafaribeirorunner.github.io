@@ -1,0 +1,1152 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Assessoria de Corrida e Performance com Rafael Ribeiro. Treinos personalizados, planilhas e resultados.">
+    <title>Rafael Ribeiro — Corrida & Performance</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* --- VARIÁVEIS & RESET --- */
+        :root {
+            --color-black: #050505;
+            --color-dark-gray: #1a1a1a;
+            --color-white: #ffffff;
+            --color-red: #D90429; /* Vermelho vibrante para contraste */
+            --color-red-hover: #EF233C;
+            --font-main: 'Montserrat', sans-serif;
+            --nav-height: 80px;
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            background-color: var(--color-black);
+        }
+
+        body {
+            font-family: var(--font-main);
+            color: var(--color-white);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* --- INTRO ANIMATION & NAV --- */
+        #intro-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background-color: var(--color-black);
+            z-index: 2000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.8s ease-out, visibility 0.8s;
+        }
+
+        .brand-text {
+            font-weight: 900;
+            font-size: 3rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-align: center;
+            position: relative;
+            transition: var(--transition);
+        }
+
+        .brand-sub {
+            font-weight: 300;
+            font-size: 1.2rem;
+            color: var(--color-red);
+            margin-top: 10px;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            opacity: 0;
+            animation: fadeInUp 1s ease forwards 0.5s;
+        }
+
+        /* Animação inicial */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Navbar fixa após a intro */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: var(--nav-height);
+            background: rgba(5, 5, 5, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 5%;
+            transform: translateY(-100%); /* Escondido inicialmente */
+            transition: transform 0.5s ease;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        header.visible {
+            transform: translateY(0);
+        }
+
+        .logo {
+            font-weight: 800;
+            font-size: 1.5rem;
+            text-decoration: none;
+            color: var(--color-white);
+            text-transform: uppercase;
+        }
+
+        .logo span { color: var(--color-red); }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--color-white);
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            position: relative;
+            transition: color 0.3s;
+        }
+
+        nav a:hover { color: var(--color-red); }
+
+        /* Botão no celular */
+        .mobile-toggle {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: white;
+        }
+
+        /* --- tela de apresentação --- */
+        #hero {
+            height: 100vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 110%; /* Altura extra para o parallax */
+            background-image: url('img/home.JPG');
+            background-size: cover;
+            background-position: center;
+            z-index: -1;
+            filter: brightness(0.6) grayscale(100%); /* Efeito P&B */
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 1;
+            padding: 0 20px;
+            opacity: 0; /* JS vai tratar disso */
+            transform: translateY(30px);
+        }
+
+        .hero-title {
+            font-size: 4rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            line-height: 1.1;
+            margin-bottom: 20px;
+        }
+
+        .hero-title span {
+            color: var(--color-red);
+            display: block;
+        }
+
+        .btn-main {
+            display: inline-block;
+            padding: 15px 40px;
+            background-color: var(--color-red);
+            color: white;
+            text-decoration: none;
+            font-weight: 700;
+            text-transform: uppercase;
+            border-radius: 2px;
+            transition: var(--transition);
+            border: 2px solid var(--color-red);
+        }
+
+        .btn-main:hover {
+            background-color: transparent;
+            color: var(--color-red);
+            transform: scale(1.02);
+        }
+
+        /* --- SEÇÕES GERAIS --- */
+        section {
+            padding: 100px 5%;
+            min-height: auto;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            text-transform: uppercase;
+            margin-bottom: 50px;
+            text-align: center;
+            font-weight: 800;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background: var(--color-red);
+            margin: 15px auto 0;
+        }
+
+        /* Efeito de Fade on Scroll */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease-out;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- SOBRE --- */
+        #sobre { background-color: var(--color-black); }
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .about-text p { margin-bottom: 20px; color: #ccc; }
+        
+        /* Seção Clã Delfos */
+        .clan-section {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            margin: 40px 0;
+            padding: 25px;
+            background: rgba(217, 4, 41, 0.08);
+            border-left: 3px solid var(--color-red);
+            border-radius: 6px;
+        }
+
+        .clan-logo {
+            flex-shrink: 0;
+        }
+
+        .clan-logo img {
+            width: 100px;
+            height: 100px;
+            object-fit: contain;
+            filter: grayscale(0%);
+            transition: filter 0.3s;
+        }
+
+        .clan-logo img:hover {
+            filter: brightness(1.1);
+        }
+
+        .clan-info h4 {
+            font-size: 1.3rem;
+            margin-bottom: 8px;
+            color: var(--color-red);
+            font-weight: 700;
+        }
+
+        .clan-info p {
+            font-size: 0.95rem;
+            color: #aaa;
+            margin: 0;
+        }
+
+        .clan-section-link {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            transition: var(--transition);
+        }
+
+        .clan-section-link:hover .clan-section {
+            background: rgba(217, 4, 41, 0.15);
+            border-color: var(--color-red-hover);
+            transform: scale(1.03)
+        }
+
+        .about-img img {
+            width: 100%;
+            filter: grayscale(100%);
+            transition: filter 0.5s;
+        }
+        .about-img img:hover { filter: grayscale(0%); }
+
+        /* --- CARROSSEL p/ carreira e resultados --- */
+        .carousel-container {
+            width: 100%;
+            overflow-x: auto;
+            display: flex;
+            gap: 20px;
+            padding-bottom: 20px;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        .carousel-container::-webkit-scrollbar {
+            height: 8px;
+        }
+        .carousel-container::-webkit-scrollbar-thumb {
+            background: var(--color-red);
+            border-radius: 4px;
+        }
+        .carousel-container::-webkit-scrollbar-track {
+            background: #333;
+        }
+
+        /* Cards Carreira */
+        .race-card {
+            min-width: 300px;
+            background: var(--color-dark-gray);
+            padding: 0;
+            border-left: 3px solid var(--color-red);
+            scroll-snap-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .race-img {
+            height: 180px;
+            width: 100%;
+            object-fit: cover;
+            opacity: 0.7;
+        }
+
+        .race-img.clickable {
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .race-img.clickable:hover {
+            opacity: 1;
+            transform: scale(1.05);
+        }
+
+        /* Posicionar a primeira imagem mais ao topo */
+        .race-card:first-child .race-img {
+            object-position: center top;
+        }
+
+        .race-info { padding: 20px; }
+        .race-info h3 { margin-bottom: 5px; font-size: 1.2rem; }
+        .race-info .km { color: var(--color-red); font-weight: bold; font-size: 0.9rem; }
+        .race-location {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 15px;
+            color: #999;
+            font-size: 0.9rem;
+        }
+        .race-location i {
+            color: var(--color-red);
+            font-size: 1rem;
+        }
+
+        /* Cards Resultados (Depoimentos) */
+        .testimonial-card {
+            min-width: 350px;
+            background: var(--color-white);
+            color: var(--color-black);
+            padding: 30px;
+            scroll-snap-align: center;
+            border-radius: 4px;
+        }
+        .quote { font-style: italic; font-size: 1rem; margin-bottom: 15px; }
+        .author { font-weight: 800; font-size: 0.9rem; text-transform: uppercase; }
+
+        /* Cards Alunos (Resultados com Fotos) */
+        .student-card {
+            min-width: 280px;
+            background: var(--color-dark-gray);
+            padding: 20px;
+            scroll-snap-align: center;
+            border-radius: 8px;
+            text-align: center;
+            transition: var(--transition);
+            border: 1px solid #333;
+        }
+        .student-card:hover {
+            border-color: var(--color-red);
+        }
+        .student-card img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .student-card img:hover {
+            transform: scale(1.05);
+        }
+        .student-name {
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+        }
+        .student-achievement {
+            font-size: 0.95rem;
+            color: var(--color-red);
+            font-weight: 600;
+        }
+
+        /* Seção "E Muitas outras" */
+        .career-more {
+            margin-top: 80px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .career-more-img {
+            animation: slideInLeft 0.8s ease-out 0.3s forwards;
+            opacity: 0;
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .career-more-img img {
+            width: 100%;
+            filter: grayscale(100%);
+            border-radius: 8px;
+            transition: filter 0.5s;
+        }
+
+        .career-more-img img:hover {
+            filter: grayscale(0%);
+        }
+
+        .career-more-content {
+            animation: slideInRight 0.8s ease-out 0.3s forwards;
+            opacity: 0;
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .career-more-content h3 {
+            font-size: 2.2rem;
+            margin-bottom: 30px;
+            font-weight: 900;
+        }
+
+        .career-more-content p {
+            font-size: 1.1rem;
+            margin-bottom: 25px;
+            color: #ccc;
+            line-height: 1.8;
+        }
+
+        .strava-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 15px 30px;
+            background-color: var(--color-red);
+            color: white;
+            text-decoration: none;
+            font-weight: 700;
+            text-transform: uppercase;
+            border-radius: 2px;
+            transition: var(--transition);
+            border: 2px solid var(--color-red);
+            font-size: 0.9rem;
+        }
+
+        .strava-link:hover {
+            background-color: transparent;
+            color: var(--color-red);
+            transform: scale(1.02);
+        }
+
+        .strava-link i {
+            font-size: 1.3rem;
+        }
+
+        @media (max-width: 768px) {
+            .career-more {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+        }
+
+        /* Modal para Fotos dos Alunos */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2001;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            animation: fadeIn 0.3s;
+        }
+        .modal.active {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .modal-content {
+            max-width: 90%;
+            max-height: 90vh;
+            position: relative;
+            animation: slideIn 0.3s;
+        }
+        @keyframes slideIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        .modal-content img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            max-height: 80vh;
+            object-fit: contain;
+        }
+        .modal-close {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--color-red);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .modal-close:hover {
+            color: var(--color-red-hover);
+            transform: scale(1.2);
+        }
+
+        /* --- PLANOS --- */
+        #planos { background-color: var(--color-dark-gray); }
+        
+        .plans-category {
+            margin-bottom: 60px;
+        }
+
+        .category-title {
+            font-size: 1.8rem;
+            text-align: center;
+            margin-bottom: 40px;
+            color: var(--color-white);
+            font-weight: 700;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .category-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: var(--color-red);
+        }
+
+        .plans-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .plan-card {
+            background: var(--color-black);
+            border: 1px solid #333;
+            padding: 40px 20px;
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .plan-card:hover {
+            border-color: var(--color-red);
+            transform: translateY(-10px);
+        }
+
+        .plan-name { font-size: 1.5rem; margin-bottom: 10px; }
+        .plan-price { font-size: 2.5rem; font-weight: 900; color: var(--color-red); margin-bottom: 20px; }
+        .plan-price small { font-size: 1rem; color: white; }
+        .plan-features { list-style: none; margin-bottom: 30px; text-align: left; padding: 0 20px; }
+        .plan-features li { padding: 8px 0; border-bottom: 1px solid #333; font-size: 0.9rem; }
+
+        /* --- CONTATO / FOOTER --- */
+        #contato {
+            background: linear-gradient(135deg, #000 0%, #1a1a1a 100%);
+            padding: 100px 20px 40px;
+            text-align: center;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-content {
+            margin-bottom: 60px;
+        }
+
+        .motivacional {
+            font-size: 2.2rem;
+            font-weight: 300;
+            margin-bottom: 60px;
+            font-style: italic;
+            line-height: 1.4;
+        }
+        .motivacional span { 
+            color: var(--color-red); 
+            font-weight: 700;
+            display: inline-block;
+        }
+
+        .contact-section {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(217, 4, 41, 0.2);
+            border-radius: 12px;
+            padding: 50px 30px;
+            backdrop-filter: blur(10px);
+        }
+
+        .contact-title {
+            font-size: 1.8rem;
+            margin-bottom: 40px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .social-link {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: var(--color-white);
+            transition: var(--transition);
+            padding: 20px;
+            border-radius: 8px;
+            border: 2px solid transparent;
+        }
+
+        .social-link i {
+            font-size: 2.5rem;
+            color: var(--color-red);
+            transition: var(--transition);
+        }
+
+        .social-link:hover {
+            background: rgba(217, 4, 41, 0.1);
+            border-color: var(--color-red);
+            transform: translateY(-5px);
+        }
+
+        .social-link:hover i {
+            color: var(--color-red-hover);
+            filter: drop-shadow(0 0 8px rgba(217, 4, 41, 0.5));
+            transform: scale(1.15);
+        }
+
+        .social-link span {
+            font-size: 0.95rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .contact-info {
+            margin-top: 40px;
+            padding-top: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .contact-text {
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            color: #ccc;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 30px;
+            font-size: 0.85rem;
+            color: #666;
+        }
+
+        footer {
+            padding: 20px;
+            text-align: center;
+            font-size: 0.8rem;
+            color: #555;
+            border-top: 1px solid #222;
+        }
+
+        /* --- RESPONSIVIDADE --- */
+        @media (max-width: 768px) {
+            .hero-title { font-size: 2.5rem; }
+            .brand-text { font-size: 2rem; }
+            
+            nav ul {
+                display: none; /* Simplificação para o exemplo: esconder menu desktop */
+                flex-direction: column;
+                position: absolute;
+                top: var(--nav-height);
+                left: 0;
+                width: 100%;
+                background: black;
+                padding: 20px;
+                text-align: center;
+            }
+            nav.active ul { display: flex; } /* Toggle JS */
+            
+            .mobile-toggle { display: block; }
+            .about-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="intro-overlay">
+        <div class="brand-text">Rafael Ribeiro</div>
+        <div class="brand-sub">Corrida & Performance</div>
+    </div>
+
+    <header id="navbar">
+        <a href="#" class="logo">Rafael <span>Ribeiro</span></a>
+        <button class="mobile-toggle" aria-label="Abrir menu">☰</button>
+        <nav>
+            <ul>
+                <li><a href="#sobre">Sobre</a></li>
+                <li><a href="#carreira">Carreira</a></li>
+                <li><a href="#resultados">Resultados</a></li>
+                <li><a href="#planos">Planos</a></li>
+                <li><a href="#contato">Contato</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="hero">
+        <div class="hero-bg" id="hero-bg"></div>
+        <div class="hero-content">
+            <h1 class="hero-title">Supere seus<br><span>Limites</span></h1>
+            <p style="margin-bottom: 30px; font-size: 1.1rem;">Assessoria esportiva especializada em alta performance.</p>
+            <a href="#planos" class="btn-main">Começar Agora</a>
+        </div>
+    </section>
+
+    <section id="sobre">
+        <div class="section-title reveal">Sobre Mim</div>
+        <div class="about-grid">
+            <div class="about-img reveal">
+                <img src="img/rafa_pista.jpeg" loading="lazy">
+            </div>
+            <div class="about-text reveal">
+                <h3>Quem é Rafael?</h3>
+                <br>
+                <p>Sou Rafael, professor de Educação Física, atleta e apaixonado pela corrida de montanha. Acredito que o esporte tem o poder de transformar vidas, fortalecer a mente e levar pessoas comuns a conquistas extraordinárias.</p>
+                <p>Minha história no esporte começou há mais de 12 anos, passando pela musculação até encontrar na corrida a minha verdadeira paixão. Ao longo do tempo, evoluí como atleta, enfrentei desafios, aprendi com erros e conquistei resultados tanto na corrida de rua quanto na corrida de montanha. Hoje, aos 31 anos, sigo em constante evolução, acreditando que dedicação, esforço e disciplina são os pilares para qualquer grande conquista.  </p>
+                <p>Com esses 12 anos de experiência, quero ajudar você a evoluir, superar seus limites e alcançar seus objetivos, respeitando seu ritmo e sua individualidade.</p>
+                
+                <a href="https://cladelfos.esp.br/" target="_blank" class="clan-section-link">
+                    <div class="clan-section">
+                        <div class="clan-logo">
+                            <img src="img/delfos.png" alt="Clã Delfos" loading="lazy">
+                        </div>
+                        <div class="clan-info">
+                            <h4>Membro do Clã Delfos</h4>
+                            <p>Entidade esportiva sem fins lucrativos que promove o atletismo para desenvolver habilidades psicomotoras, incentivar a integração social, especialmente de jovens, e viabilizar a participação em eventos oficiais.</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section id="carreira">
+        <div class="section-title reveal">Minha Carreira</div>
+        <div class="carousel-container reveal">
+            <div class="race-card">
+                <img src="img/1° geral itatiaia.jpeg" class="race-img clickable" alt="Parque Nacional de Itatiaia" loading="lazy">
+                <div class="race-info">
+                    <h3>Evolution National Park - Montanha</h3>
+                    <p class="km">1° Geral | 12km | Tempo: 1:06:19 </p>
+                    <div class="race-location">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Parque Nacional de Itatiaia</span>
+                    </div>
+                </div>
+            </div>
+            <div class="race-card">
+                <img src="img/2° campeonato brasileiro.jpeg" class="race-img clickable" loading="lazy">
+                <div class="race-info">
+                    <h3>2° Campeonato Brasileiro de trilhas e montanhas</h3>
+                    <p class="km">12km | Tempo: 1:05:26</p>
+                    <div class="race-location">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Parque Nacional de Itatiaia</span>
+                    </div>
+                </div>
+            </div>
+            <div class="race-card">
+                <img src="img/recorde pessoal ecopark.jpeg" class="race-img clickable" loading="lazy">
+                <div class="race-info">
+                    <h3>Corrida EcoParque Resende - Clã Delfos</h3>
+                    <p class="km">3° Geral | 5km | Tempo: 19:26</p>
+                    <div class="race-location">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Resende - RJ</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="race-card">
+                <img src="img/corrida do aço 2.JPG" class="race-img clickable" loading="lazy" style="object-position: center top;">
+                <div class="race-info">
+                    <h3>Corrida do Aço</h3>
+                    <p class="km">1° na categoria | 7km | Tempo: 24:11</p>
+                    <div class="race-location">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Volta Redonda - RJ</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="race-card">
+                <img src="img/tutan.jpeg" class="race-img clickable" loading="lazy">
+                <div class="race-info">
+                    <h3>TUTAN - Visconde de Mauá</h3>
+                    <p class="km">2° na categoria | Tempo: 50:06</p>
+                    <div class="race-location">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Bocaina de Minas - MG</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="race-card">
+                <img src="img/dona_chica.jpeg" class="race-img clickable" loading="lazy">
+                <div class="race-info">
+                    <h3>Dona Chica - Trail</h3>
+                    <p class="km">3° Geral | 23km | Tempo: 2:16:05</p>
+                    <div class="race-location">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Ouro Preto - MG</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- E Muitas outras -->
+        <div class="career-more reveal">
+            <div class="career-more-img reveal">
+                <img src="img/Trofeu.jpeg" alt="Rafael - Muitas outras corridas" loading="lazy">
+            </div>
+            <div class="career-more-content reveal">
+                <h3>E muitas outras...</h3>
+                <p>Essas são apenas algumas das minhas principais conquistas. Participo regularmente de corridas de rua e trilha, sempre buscando evoluir, superando novos desafios e estabelecendo novas marcas pessoais.</p>
+                <p>Acompanhe toda a minha jornada, treinos, tempos e desafios no Strava, onde você pode ver meu progresso contínuo e se inspirar para começar a sua própria jornada!</p>
+                <a href="https://strava.app.link/IGM8SJXZ4Zb" target="_blank" class="strava-link" aria-label="Acompanhe no Strava">
+                    <i class="fab fa-strava"></i>
+                    Acompanhe no Strava
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section id="resultados" style="background-color: #111;">
+        <div class="section-title reveal">Resultados</div>
+        <div class="carousel-container reveal">
+            <div class="student-card">
+                <img src="img/alunos/sabrina.JPG" alt="Aluno 1">
+                <p class="student-name">Sabrina</p>
+                <p class="student-achievement">"Com os treinos e orientações certas, consegui perder peso, ganhar disposição e hoje me sinto muito mais confiante com meu corpo."</p>
+            </div>
+            <div class="student-card">
+                <img src="img/alunos/priscilla.JPG" alt="Aluno 2">
+                <p class="student-name">Priscilla</p>
+                <p class="student-achievement">"Nunca imaginei que conseguiria manter uma rotina de treinos. Além do emagrecimento, ganhei força, condicionamento e qualidade de vida."</p>
+            </div>
+            <div class="student-card">
+                <img src="img/alunos/Juliana.JPG" alt="Aluno 3">
+                <p class="student-name">Juliana</p>
+                <p class="student-achievement">"Os resultados foram além do físico: mais energia no dia a dia, melhora no condicionamento e uma evolução que me motiva a continuar."</p>
+            </div>
+            <div class="student-card">
+                <img src="img/alunos/chris.png" alt="Aluno 4">
+                <p class="student-name">Christian</p>
+                <p class="student-achievement">"Com o acompanhamento do Rafael evoluí muito além do que imaginava. Hoje me sinto forte, confiante e motivado, graças às orientações e ao suporte profissional ao longo de todo o processo."</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="planos">
+        <div class="section-title reveal">Planos de Treino</div>
+        
+        <!-- Assessoria Esportiva -->
+        <div class="plans-category reveal">
+            <h2 class="category-title">Assessoria Esportiva</h2>
+            <div class="plans-grid">
+                <div class="plan-card">
+                    <div class="plan-name">A solução pra você ter os resultados e o corpo que sempre sonhou, sem ficar horas treinando.</div>
+                    <ul class="plan-features">
+                        <li>Planilha personalizada</li>
+                        <li>Suporte via WhatsApp</li>
+                        <li>Análise de performance</li>
+                    </ul>
+                    <a href="https://pages.mfitpersonal.com.br/index?acao=page&tipo=2&buyPage=103155&page=103155" class="btn-main" style="width:100%">Assessoria Esportiva</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Personal Training -->
+        <div class="plans-category reveal">
+            <h2 class="category-title">Personal Training</h2>
+            <div class="plans-grid">
+                <div class="plan-card">
+                    <h3 class="plan-name">Super</h3>
+                    <ul class="plan-features">
+                        <li>12 aulas presenciais</li>
+                        <li>Planilha semanal</li>
+                        <li>Suporte ilimitado</li>
+                        <li>2x avaliações corporais mensais</li>
+                    </ul>
+                    <a href="https://pages.mfitpersonal.com.br/index?acao=page&tipo=2&buyPage=114242&page=114242" target="_blank" class="btn-main" style="width:100%">Personal Super</a>
+                </div>
+                <div class="plan-card">
+                    <h3 class="plan-name">Gold</h3>
+                    <ul class="plan-features">
+                        <li>8 aulas presenciais</li>
+                        <li>Planilha personalizada</li>
+                        <li>1x avaliação corporal mensal</li>
+                    </ul>
+                    <a href="https://pages.mfitpersonal.com.br/index?acao=page&tipo=2&buyPage=114243&page=114243" target="_blank" class="btn-main" style="width:100%; margin-top: 38px">Personal Gold</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Consultoria -->
+        <div class="plans-category reveal">
+            <h2 class="category-title">Consultoria Online</h2>
+            <div class="plans-grid">
+                <div class="plan-card">
+                    <div class="plan-name">Acompanhamento on-line com treino totalmente individualizado, desenvolvido de acordo com seus objetivos e sua rotina de trabalho.</div>
+                    <ul class="plan-features">
+                        <li>Treino 100% individualizado, adaptado aos seus objetivos e rotina</li>
+                        <li>Planilha mensal personalizada, atualizada conforme sua evolução</li>
+                        <li>Ajustes periódicos de cargas para garantir progressão e resultados</li>
+                        <li>Suporte on-line direto com o personal para tirar dúvidas sempre que precisar</li>
+                    </ul>
+                    <a href="https://pages.mfitpersonal.com.br/index?acao=page&tipo=2&buyPage=114238&page=114238" target="_blank" class="btn-main" style="width:100%">Consultoria Online</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contato">
+        <div class="footer-container reveal">
+            <div class="footer-content">
+                <p class="motivacional">"A dor é temporária,<br><span>a glória é eterna.</span>"</p>
+                
+                <div class="contact-section">
+                    <h3 class="contact-title">Entre em Contato</h3>
+                    
+                    <div class="social-links">
+                        <a href="https://wa.me/5524992569818?text=Olá!%20Gostaria%20de%20saber%20mais%20sobre%20os%20planos." target="_blank" class="social-link whatsapp" aria-label="WhatsApp">
+                            <i class="fab fa-whatsapp"></i>
+                            <span>WhatsApp</span>
+                        </a>
+
+                        <a href="https://www.instagram.com/rafaelribeiro.runner/" target="_blank" class="social-link instagram" aria-label="Instagram">
+                            <i class="fab fa-instagram"></i>
+                            <span>Instagram</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const introOverlay = document.getElementById('intro-overlay');
+            const navbar = document.getElementById('navbar');
+            const heroContent = document.querySelector('.hero-content');
+            const mobileToggle = document.querySelector('.mobile-toggle');
+            const nav = document.querySelector('nav');
+
+            // Sequência da animação inicial
+            setTimeout(() => {
+                introOverlay.style.opacity = '0';
+                
+                // Mostrar navbar e hero
+                setTimeout(() => {
+                    introOverlay.style.visibility = 'hidden';
+                    navbar.classList.add('visible');
+                    
+                    // Pequeno delay para o texto do hero subir
+                    setTimeout(() => {
+                        heroContent.style.opacity = '1';
+                        heroContent.style.transform = 'translateY(0)';
+                        heroContent.style.transition = 'all 1s ease-out';
+                    }, 300);
+                }, 800);
+            }, 2500); // Tempo
+
+            mobileToggle.addEventListener('click', () => {
+                nav.classList.toggle('active');
+            });
+
+            // parallax
+            window.addEventListener('scroll', () => {
+                const scrolled = window.scrollY;
+                const heroBg = document.getElementById('hero-bg');
+                // Move o fundo mais devagar que o scroll
+                heroBg.style.transform = `translateY(${scrolled * 0.5}px)`;
+            });
+
+            const observerOptions = {
+                threshold: 0.15
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.reveal').forEach(el => {
+                observer.observe(el);
+            });
+
+            // Modal para fotos dos alunos
+            const modal = document.getElementById('studentModal');
+            const studentImages = document.querySelectorAll('.student-card img');
+            const modalImage = document.getElementById('modalImage');
+            const closeBtn = document.querySelector('.modal-close');
+
+            studentImages.forEach(img => {
+                img.addEventListener('click', function() {
+                    modal.classList.add('active');
+                    modalImage.src = this.src;
+                    modalImage.alt = this.alt;
+                });
+            });
+
+            // Modal para fotos da carreira
+            const careerImages = document.querySelectorAll('.race-img.clickable');
+            careerImages.forEach(img => {
+                img.addEventListener('click', function() {
+                    modal.classList.add('active');
+                    modalImage.src = this.src;
+                    modalImage.alt = this.alt || 'Imagem da carreira';
+                });
+            });
+
+            closeBtn.addEventListener('click', function() {
+                modal.classList.remove('active');
+            });
+
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    modal.classList.remove('active');
+                }
+            });
+        });
+
+        window.onload = function() {
+            window.scrollTo(0, 0);
+        };
+    </script>
+
+    <!-- Modal para Fotos dos Alunos -->
+    <div id="studentModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <img id="modalImage" src="" alt="Imagem expandida">
+        </div>
+    </div>
+</body>
+</html>
