@@ -115,26 +115,21 @@
             display: none;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            padding: 60px 20px;
-            text-align: center;
-            gap: 24px;
+            padding: 20px 0 40px;
+            gap: 16px;
+            width: 100%;
         }
 
-        .mk-mobile-fallback i {
-            font-size: 4rem;
-            color: var(--color-red);
+        .mk-pages {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            width: 100%;
         }
 
-        .mk-mobile-fallback h2 {
-            font-size: 1.5rem;
-            font-weight: 700;
-        }
-
-        .mk-mobile-fallback p {
-            color: #aaa;
-            max-width: 360px;
-            line-height: 1.6;
+        .mk-pages img {
+            width: 100%;
+            display: block;
         }
 
         @media (max-width: 768px) {
@@ -190,12 +185,21 @@
     </div>
 
     <div class="mk-mobile-fallback">
-        <i class="fas fa-file-pdf"></i>
-        <h2>Media Kit — Rafael Ribeiro</h2>
-        <p>Visualize ou baixe o media kit completo para conhecer a trajetória, os resultados e as oportunidades de parceria com Rafael Ribeiro.</p>
         <a href="assets/pdf/rafael_media_kit.pdf" download class="mk-download">
-            <i class="fas fa-download"></i> Baixar Media Kit
+            <i class="fas fa-download"></i> Baixar Media Kit (PDF)
         </a>
+        <div class="mk-pages">
+            <img src="assets/img/media-kit/page-0001.jpg" alt="Página 1" loading="lazy">
+            <img src="assets/img/media-kit/page-0002.jpg" alt="Página 2" loading="lazy">
+            <img src="assets/img/media-kit/page-0003.jpg" alt="Página 3" loading="lazy">
+            <img src="assets/img/media-kit/page-0004.jpg" alt="Página 4" loading="lazy">
+            <img src="assets/img/media-kit/page-0005.jpg" alt="Página 5" loading="lazy">
+            <img src="assets/img/media-kit/page-0006.jpg" alt="Página 6" loading="lazy">
+            <img src="assets/img/media-kit/page-0007.jpg" alt="Página 7" loading="lazy">
+            <img src="assets/img/media-kit/page-0008.jpg" alt="Página 8" loading="lazy">
+            <img src="assets/img/media-kit/page-0009.jpg" alt="Página 9" loading="lazy">
+            <img src="assets/img/media-kit/page-0010.jpg" alt="Página 10" loading="lazy">
+        </div>
     </div>
 
 </body>
