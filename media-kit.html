@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Media Kit — Rafael Ribeiro</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --color-black: #050505;
+            --color-red: #D90429;
+            --color-white: #ffffff;
+            --font-main: 'Montserrat', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html, body {
+            background-color: var(--color-black);
+            color: var(--color-white);
+            font-family: var(--font-main);
+            height: 100%;
+            overflow-x: hidden;
+        }
+
+        .mk-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 5%;
+            background: rgba(5, 5, 5, 0.95);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .mk-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .mk-title span { color: var(--color-red); }
+
+        .mk-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            color: var(--color-white);
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 10px 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .mk-back:hover {
+            border-color: var(--color-red);
+            color: var(--color-red);
+        }
+
+        .mk-download {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            color: var(--color-white);
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 10px 20px;
+            background: var(--color-red);
+            border: 2px solid var(--color-red);
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .mk-download:hover {
+            background: transparent;
+            color: var(--color-red);
+        }
+
+        .mk-actions {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .mk-viewer {
+            width: 100%;
+            height: calc(100vh - 70px);
+        }
+
+        .mk-viewer iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: block;
+        }
+
+        /* Fallback para mobile onde iframe de PDF pode não funcionar */
+        .mk-mobile-fallback {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 60px 20px;
+            text-align: center;
+            gap: 24px;
+        }
+
+        .mk-mobile-fallback i {
+            font-size: 4rem;
+            color: var(--color-red);
+        }
+
+        .mk-mobile-fallback h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .mk-mobile-fallback p {
+            color: #aaa;
+            max-width: 360px;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            .mk-viewer { display: none; }
+            .mk-mobile-fallback { display: flex; }
+
+            .mk-header {
+                padding: 14px 4%;
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+
+            .mk-title {
+                font-size: 0.8rem;
+                letter-spacing: 1px;
+                flex: 1 1 100%;
+                text-align: center;
+            }
+
+            .mk-actions {
+                flex: 1 1 100%;
+                justify-content: center;
+            }
+
+            .mk-back,
+            .mk-download {
+                font-size: 0.75rem;
+                padding: 8px 14px;
+                letter-spacing: 0;
+            }
+
+            .mk-back .btn-label,
+            .mk-download .btn-label { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="mk-header">
+        <div class="mk-title">Rafael <span>Ribeiro</span> — Media Kit</div>
+        <div class="mk-actions">
+            <a href="assets/pdf/rafael_media_kit.pdf" download class="mk-download">
+                <i class="fas fa-download"></i><span class="btn-label"> Baixar PDF</span>
+            </a>
+            <a href="index.html" class="mk-back">
+                <i class="fas fa-arrow-left"></i><span class="btn-label"> Voltar</span>
+            </a>
+        </div>
+    </div>
+
+    <div class="mk-viewer">
+        <iframe src="assets/pdf/rafael_media_kit.pdf" title="Media Kit Rafael Ribeiro"></iframe>
+    </div>
+
+    <div class="mk-mobile-fallback">
+        <i class="fas fa-file-pdf"></i>
+        <h2>Media Kit — Rafael Ribeiro</h2>
+        <p>Visualize ou baixe o media kit completo para conhecer a trajetória, os resultados e as oportunidades de parceria com Rafael Ribeiro.</p>
+        <a href="assets/pdf/rafael_media_kit.pdf" download class="mk-download">
+            <i class="fas fa-download"></i> Baixar Media Kit
+        </a>
+    </div>
+
+</body>
+</html>
