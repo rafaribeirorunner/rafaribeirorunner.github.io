@@ -618,6 +618,19 @@ section {
     padding-bottom: 15px;
 }
 
+button.category-title {
+    display: block;
+    width: 100%;
+    border: 0;
+    background: transparent;
+    font-family: var(--font-main);
+    cursor: default;
+}
+
+.accordion-arrow {
+    display: none;
+}
+
 .category-title::after {
     content: '';
     position: absolute;
@@ -866,24 +879,336 @@ footer {
 
 /* --- RESPONSIVIDADE --- */
 @media (max-width: 768px) {
-    .hero-title { font-size: 2.5rem; }
-    .brand-text { font-size: 2rem; }
-    .hero-actions { flex-direction: column; align-items: center; }
+    header {
+        height: 64px;
+    }
+
+    .logo {
+        font-size: 1.25rem;
+    }
+
+    .mobile-toggle {
+        display: block;
+        font-size: 1.25rem;
+        line-height: 1;
+    }
+
+    .brand-text { font-size: 1.8rem; }
+    .brand-sub { font-size: 0.9rem; letter-spacing: 3px; }
+    .hero-title { font-size: 2.2rem; margin-bottom: 16px; }
+    .hero-content p { font-size: 1rem !important; margin-bottom: 24px !important; }
+    .hero-actions { flex-direction: column; align-items: center; gap: 10px; }
+    .btn-main,
+    .btn-outline,
+    .strava-link,
+    .btn-submit {
+        min-height: 44px;
+        padding: 11px 24px;
+        font-size: 0.85rem;
+    }
     .btn-outline { margin-left: 0; }
 
     nav ul {
         display: none;
         flex-direction: column;
         position: absolute;
-        top: var(--nav-height);
+        top: 64px;
         left: 0;
         width: 100%;
         background: black;
-        padding: 20px;
+        padding: 12px 20px;
         text-align: center;
+        gap: 16px;
     }
     nav.active ul { display: flex; }
 
-    .mobile-toggle { display: block; }
-    .about-grid { grid-template-columns: 1fr; }
+    nav a {
+        font-size: 0.85rem;
+    }
+
+    section {
+        padding: 64px 20px;
+    }
+
+    .section-title {
+        font-size: 2rem;
+        margin-bottom: 32px;
+    }
+
+    .section-title::after {
+        width: 48px;
+        height: 3px;
+        margin-top: 12px;
+    }
+
+    .about-grid { grid-template-columns: 1fr; gap: 28px; }
+    .about-text p { font-size: 0.95rem; margin-bottom: 16px; }
+
+    .clan-section {
+        gap: 16px;
+        margin: 28px 0;
+        padding: 16px;
+    }
+
+    .clan-logo img {
+        width: 72px;
+        height: 72px;
+    }
+
+    .clan-info h4 {
+        font-size: 1.05rem;
+    }
+
+    .clan-info p {
+        font-size: 0.88rem;
+    }
+
+    .carousel-container {
+        gap: 12px;
+        padding-bottom: 12px;
+    }
+
+    .race-card {
+        min-width: 260px;
+    }
+
+    .race-img {
+        height: 150px;
+    }
+
+    .race-info {
+        padding: 16px;
+    }
+
+    .race-info h3 {
+        font-size: 1.05rem;
+    }
+
+    .race-location {
+        margin-top: 10px;
+        font-size: 0.82rem;
+    }
+
+    .race-location i {
+        font-size: 0.9rem;
+    }
+
+    .testimonial-card {
+        min-width: 290px;
+        padding: 22px;
+    }
+
+    .quote {
+        font-size: 0.92rem;
+    }
+
+    .student-card {
+        min-width: 250px;
+        padding: 16px;
+    }
+
+    .student-card img {
+        height: 210px;
+        margin-bottom: 12px;
+    }
+
+    .student-name {
+        font-size: 1rem;
+    }
+
+    .student-achievement {
+        font-size: 0.88rem;
+    }
+
+    .career-more {
+        margin-top: 48px;
+        gap: 24px;
+    }
+
+    .career-more-content h3 {
+        font-size: 1.8rem;
+        margin-bottom: 20px;
+    }
+
+    .career-more-content p {
+        font-size: 0.95rem;
+        margin-bottom: 18px;
+        line-height: 1.65;
+    }
+
+    .strava-link {
+        gap: 9px;
+        font-size: 0.82rem;
+    }
+
+    .strava-link i {
+        font-size: 1.1rem;
+    }
+
+    .modal-close {
+        top: -34px;
+        font-size: 1.5rem;
+    }
+
+    #planos {
+        padding: 64px 20px;
+    }
+
+    #planos .section-title {
+        margin-bottom: 30px;
+    }
+
+    #planos .plans-category {
+        margin-bottom: 12px;
+        border: 1px solid #333;
+        background: var(--color-black);
+    }
+
+    #planos button.category-title {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        min-height: 56px;
+        margin: 0;
+        padding: 14px 16px;
+        text-align: left;
+        font-size: 1rem;
+        cursor: pointer;
+    }
+
+    #planos button.category-title::after {
+        content: none;
+    }
+
+    .accordion-arrow {
+        display: inline-block;
+        flex: 0 0 auto;
+        color: var(--color-red);
+        font-size: 0.9rem;
+        transition: transform 0.35s ease;
+    }
+
+    #planos .accordion-trigger[aria-expanded="true"] .accordion-arrow {
+        transform: rotate(180deg);
+    }
+
+    #planos .accordion-panel {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.45s ease;
+    }
+
+    #planos .accordion-panel.open {
+        max-height: var(--accordion-height, 1000px);
+    }
+
+    #planos .plans-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+        padding: 0 12px 12px;
+    }
+
+    #planos .plan-card {
+        padding: 20px 16px;
+        transform: none;
+    }
+
+    #planos .plan-card:hover {
+        transform: none;
+    }
+
+    #planos .plan-name {
+        font-size: 1.05rem;
+        line-height: 1.5;
+    }
+
+    #planos .plan-features {
+        margin-bottom: 16px;
+        padding: 0;
+    }
+
+    #planos .plan-features li {
+        font-size: 0.88rem;
+    }
+
+    #planos .btn-main {
+        width: 100%;
+        min-height: 44px;
+        padding: 11px 12px;
+        margin-top: 0 !important;
+    }
+
+    #contato {
+        padding: 64px 16px 32px;
+    }
+
+    .footer-content {
+        margin-bottom: 40px;
+    }
+
+    .motivacional {
+        font-size: 1.8rem;
+        margin-bottom: 40px;
+    }
+
+    .contact-section {
+        padding: 32px 16px;
+        border-radius: 8px;
+    }
+
+    .contact-title {
+        font-size: 1.5rem;
+        margin-bottom: 28px;
+        letter-spacing: 1px;
+    }
+
+    .form-group {
+        margin-bottom: 14px;
+    }
+
+    .form-group input,
+    .form-group select {
+        min-height: 44px;
+        padding: 10px 12px;
+        font-size: 0.9rem;
+    }
+
+    .success-message {
+        margin-bottom: 20px;
+        padding: 14px 16px;
+    }
+
+    .social-links {
+        gap: 18px;
+        padding-top: 22px;
+    }
+
+    .social-link {
+        gap: 8px;
+        padding: 12px;
+    }
+
+    .social-link i {
+        font-size: 1.8rem;
+    }
+
+    .social-link span {
+        font-size: 0.82rem;
+    }
+
+    .contact-info {
+        margin-top: 28px;
+        padding-top: 28px;
+    }
+
+    .contact-text {
+        font-size: 0.95rem;
+        margin-bottom: 16px;
+    }
+
+    .footer-bottom {
+        padding-top: 22px;
+        font-size: 0.78rem;
+    }
 }

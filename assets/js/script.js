@@ -46,6 +46,47 @@ document.addEventListener('DOMContentLoaded', () => {
         observer.observe(el);
     });
 
+    const accordionTriggers = document.querySelectorAll('.accordion-trigger');
+    const mobilePlans = window.matchMedia('(max-width: 768px)');
+
+    const setMobileAccordion = () => {
+        accordionTriggers.forEach(trigger => {
+            const panel = document.getElementById(trigger.getAttribute('aria-controls'));
+
+            if (mobilePlans.matches) {
+                trigger.setAttribute('aria-expanded', 'false');
+                panel.classList.remove('open');
+                panel.style.removeProperty('--accordion-height');
+            } else {
+                trigger.setAttribute('aria-expanded', 'true');
+                panel.classList.remove('open');
+                panel.style.removeProperty('--accordion-height');
+            }
+        });
+    };
+
+    accordionTriggers.forEach(trigger => {
+        trigger.addEventListener('click', () => {
+            if (!mobilePlans.matches) return;
+
+            const panel = document.getElementById(trigger.getAttribute('aria-controls'));
+            const isOpen = trigger.getAttribute('aria-expanded') === 'true';
+
+            if (isOpen) {
+                trigger.setAttribute('aria-expanded', 'false');
+                panel.classList.remove('open');
+                return;
+            }
+
+            trigger.setAttribute('aria-expanded', 'true');
+            panel.style.setProperty('--accordion-height', `${panel.scrollHeight}px`);
+            panel.classList.add('open');
+        });
+    });
+
+    setMobileAccordion();
+    mobilePlans.addEventListener('change', setMobileAccordion);
+
     // Modal para fotos dos alunos e carreira
     const modal = document.getElementById('studentModal');
     const studentImages = document.querySelectorAll('.student-card img');
