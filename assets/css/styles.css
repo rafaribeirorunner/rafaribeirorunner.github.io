@@ -321,6 +321,10 @@ section {
     transform: scale(1.03)
 }
 
+.clan-mobile-accordion {
+    display: none;
+}
+
 .about-img img {
     width: 100%;
     filter: grayscale(100%);
@@ -881,6 +885,7 @@ footer {
 @media (max-width: 768px) {
     header {
         height: 64px;
+        padding: 0 16px;
     }
 
     .logo {
@@ -889,8 +894,18 @@ footer {
 
     .mobile-toggle {
         display: block;
+        position: absolute;
+        right: 16px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 44px;
+        height: 44px;
+        margin: 0;
+        padding: 0;
         font-size: 1.25rem;
         line-height: 1;
+        align-items: center;
+        justify-content: center;
     }
 
     .brand-text { font-size: 1.8rem; }
@@ -961,6 +976,94 @@ footer {
 
     .clan-info p {
         font-size: 0.88rem;
+    }
+
+    .clan-section-link {
+        display: none;
+    }
+
+    .clan-mobile-accordion {
+        display: block;
+        margin: 28px 0;
+        border: 1px solid #333;
+        background: var(--color-black);
+    }
+
+    .clan-mobile-trigger {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        width: 100%;
+        min-height: 56px;
+        padding: 14px 16px;
+        border: 0;
+        background: transparent;
+        color: var(--color-white);
+        font-family: var(--font-main);
+        font-size: 1rem;
+        font-weight: 700;
+        text-align: left;
+        cursor: pointer;
+    }
+
+    .clan-mobile-arrow {
+        flex: 0 0 auto;
+        color: var(--color-red);
+        font-size: 0.9rem;
+        transition: transform 0.35s ease;
+    }
+
+    .clan-mobile-trigger[aria-expanded="true"] .clan-mobile-arrow {
+        transform: rotate(180deg);
+    }
+
+    .clan-mobile-panel {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.45s ease;
+    }
+
+    .clan-mobile-panel.open {
+        max-height: var(--clan-accordion-height, 700px);
+    }
+
+    .clan-mobile-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 16px;
+        padding: 0 16px 16px;
+        text-align: center;
+    }
+
+    .clan-mobile-content img {
+        width: 72px;
+        height: 72px;
+        object-fit: contain;
+    }
+
+    .clan-mobile-content p {
+        margin: 0;
+        color: #aaa;
+        font-size: 0.88rem;
+        line-height: 1.6;
+    }
+
+    .clan-mobile-link {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        width: 100%;
+        min-height: 44px;
+        margin: 0;
+        padding: 11px 12px;
+        font-size: 0.82rem;
+    }
+
+    .clan-mobile-link i {
+        font-size: 0.75rem;
     }
 
     .carousel-container {

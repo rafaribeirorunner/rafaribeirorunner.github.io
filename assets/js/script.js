@@ -87,6 +87,35 @@ document.addEventListener('DOMContentLoaded', () => {
     setMobileAccordion();
     mobilePlans.addEventListener('change', setMobileAccordion);
 
+    const clanTrigger = document.querySelector('.clan-mobile-trigger');
+    if (clanTrigger) {
+        const clanPanel = document.getElementById(clanTrigger.getAttribute('aria-controls'));
+
+        clanTrigger.addEventListener('click', () => {
+            if (!mobilePlans.matches) return;
+
+            const isOpen = clanTrigger.getAttribute('aria-expanded') === 'true';
+
+            if (isOpen) {
+                clanTrigger.setAttribute('aria-expanded', 'false');
+                clanPanel.classList.remove('open');
+                return;
+            }
+
+            clanTrigger.setAttribute('aria-expanded', 'true');
+            clanPanel.style.setProperty('--clan-accordion-height', `${clanPanel.scrollHeight}px`);
+            clanPanel.classList.add('open');
+        });
+
+        const setClanMobileState = () => {
+            clanTrigger.setAttribute('aria-expanded', 'false');
+            clanPanel.classList.remove('open');
+            clanPanel.style.removeProperty('--clan-accordion-height');
+        };
+
+        mobilePlans.addEventListener('change', setClanMobileState);
+    }
+
     // Modal para fotos dos alunos e carreira
     const modal = document.getElementById('studentModal');
     const studentImages = document.querySelectorAll('.student-card img');
